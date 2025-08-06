@@ -1,0 +1,289 @@
+✅ What is Exception Handling in Java?
+Exception Handling is a mechanism to handle runtime errors in Java so the program doesn't crash unexpectedly.
+
+It ensures the normal flow of the application is maintained even after an error.
+
+🔥 Types of Errors in Java
+Compile-Time Error – syntax issues (like missing ;)
+
+Run-Time Error (Exception) – errors that occur while the program is running
+
+✅ What is an Exception?
+An Exception is an object which represents an error during runtime.
+
+All exceptions are subclasses of the class Throwable.
+
+php
+Copy
+Edit
+Throwable
+├── Error       // Unrecoverable (e.g. OutOfMemoryError)
+└── Exception   // Recoverable (you can handle this)
+     ├── Checked Exception
+     └── Unchecked Exception
+✅ Types of Exceptions
+1. Checked Exception
+Checked at compile-time
+
+Must be handled using try-catch or throws
+
+Example: IOException, SQLException
+
+java
+Copy
+Edit
+import java.io.*;
+
+public class CheckedExample {
+    public static void main(String[] args) throws IOException {
+        FileReader file = new FileReader("abc.txt"); // checked
+        file.read();
+        file.close();
+    }
+}
+2. Unchecked Exception
+Occurs at runtime
+
+Not checked by compiler
+
+Example: ArithmeticException, NullPointerException, ArrayIndexOutOfBoundsException
+
+java
+Copy
+Edit
+public class UncheckedExample {
+    public static void main(String[] args) {
+        int a = 10 / 0; // ArithmeticException
+    }
+}
+✅ Keywords in Exception Handling
+Keyword	Description
+try	Block of code to monitor for errors
+catch	Block to handle the exception
+finally	Block that always executes
+throw	Used to manually throw an exception
+throws	Declares exceptions in method signature
+
+✅ Syntax and Example
+java
+Copy
+Edit
+public class ExceptionExample {
+    public static void main(String[] args) {
+        try {
+            int data = 50 / 0;
+        } catch (ArithmeticException e) {
+            System.out.println("Exception handled: " + e);
+        } finally {
+            System.out.println("Finally block always executed");
+        }
+    }
+}
+✅ throw vs throws
+throw	throws
+Used to explicitly throw exception	Used to declare exceptions
+Used inside method	Used in method signature
+Can throw only one exception at a time	Can declare multiple exceptions
+
+java
+Copy
+Edit
+// throw
+throw new ArithmeticException("div by zero");
+
+// throws
+public void readFile() throws IOException, SQLException
+✅ Multiple Catch Blocks
+java
+Copy
+Edit
+try {
+    int a = 10 / 0;
+} catch (ArithmeticException e) {
+    System.out.println("Arithmetic error");
+} catch (Exception e) {
+    System.out.println("General error");
+}
+⚠ Always catch child exception first then parent. Else, you'll get a compile error.
+
+✅ finally Block
+It always executes even if:
+
+An exception occurs
+
+No exception occurs
+
+You use return in try/catch
+
+java
+Copy
+Edit
+try {
+    return;
+} catch (Exception e) {
+    // handle
+} finally {
+    System.out.println("Always runs");
+}
+✅ Custom Exception (User Defined)
+java
+Copy
+Edit
+class MyException extends Exception {
+    MyException(String message) {
+        super(message);
+    }
+}
+
+public class CustomDemo {
+    public static void main(String[] args) throws MyException {
+        int age = 15;
+        if (age < 18) {
+            throw new MyException("Not eligible for voting");
+        }
+    }
+}
+✅ Best Practices
+Catch specific exceptions (not generic Exception)
+
+Don’t use empty catch blocks
+
+Always close resources (try-with-resources)
+
+Use finally or try-with-resources for cleanup (DB, file, etc.)
+
+🧠 Interview Summary
+Java Exception Handling provides a way to catch runtime errors and maintain application flow. We use try, catch, finally, throw, and throws keywords. There are checked and unchecked exceptions. Custom exceptions can be created by extending Exception or RuntimeException.
+
+Let me know if you want:
+
+Real-time project examples using try-catch
+
+Exception handling with Spring Boot
+
+Exception hierarchy diagram or one-pager summary for interview
+
+Would you like that?
+
+
+
+
+
+
+
+
+You said:
+Exception handling with Spring Boot
+
+Exception hierarchy diagram or one-pager summary for interview
+
+
+ChatGPT said:
+Great choice, Suraj! Let’s cover Exception Handling with Spring Boot and then give you an Exception Hierarchy Diagram + One-Page Interview Summary — very useful for interviews and real-time understanding.
+
+✅ 1. Exception Handling in Spring Boot
+Spring Boot provides several ways to handle exceptions globally, cleanly, and in a standardized manner.
+
+🔹 A. Using @ControllerAdvice and @ExceptionHandler
+Global Exception Handler using @ControllerAdvice.
+
+java
+Copy
+Edit
+@RestController
+@RequestMapping("/api")
+public class UserController {
+
+    @GetMapping("/user/{id}")
+    public String getUser(@PathVariable int id) {
+        if (id < 1) {
+            throw new InvalidUserIdException("User ID must be >= 1");
+        }
+        return "User " + id;
+    }
+}
+✅ Create Custom Exception:
+java
+Copy
+Edit
+public class InvalidUserIdException extends RuntimeException {
+    public InvalidUserIdException(String message) {
+        super(message);
+    }
+}
+✅ Global Exception Handler:
+java
+Copy
+Edit
+@ControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(InvalidUserIdException.class)
+    public ResponseEntity<String> handleInvalidUserId(InvalidUserIdException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleAll(Exception ex) {
+        return new ResponseEntity<>("Something went wrong", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
+🔹 B. Using @ResponseStatus (For custom status code)
+java
+Copy
+Edit
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
+public class ResourceNotFoundException extends RuntimeException {
+    public ResourceNotFoundException(String message) {
+        super(message);
+    }
+}
+If this exception is thrown, Spring Boot will automatically return 404 Not Found.
+
+🔹 C. Using ResponseEntityExceptionHandler (Advanced)
+Extend this class to override methods like handleMethodArgumentNotValid, handleHttpMessageNotReadable, etc., for fine-grained control.
+
+java
+Copy
+Edit
+@ControllerAdvice
+public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+            MethodArgumentNotValidException ex,
+            HttpHeaders headers, HttpStatus status, WebRequest request) {
+        
+        return new ResponseEntity<>("Validation failed", HttpStatus.BAD_REQUEST);
+    }
+}
+✅ 2. Java Exception Hierarchy Diagram
+php
+Copy
+Edit
+Throwable
+├── Error
+│   ├── OutOfMemoryError
+│   └── StackOverflowError
+└── Exception
+    ├── Checked Exception
+    │   ├── IOException
+    │   ├── SQLException
+    │   └── ParseException
+    └── Unchecked Exception (RuntimeException)
+        ├── ArithmeticException
+        ├── NullPointerException
+        ├── IllegalArgumentException
+        ├── ArrayIndexOutOfBoundsException
+        └── CustomRuntimeException
+✅ 3. One-Pager Interview Summary
+Concept	Description
+Exception	An object that indicates an error occurred during program execution.
+Types	Checked (compile-time), Unchecked (runtime)
+Common Checked	IOException, SQLException
+Common Unchecked	NullPointerException, ArithmeticException
+Keywords	try, catch, finally, throw, throws
+throw vs throws	throw is used to raise an exception; throws declares possible exceptions
+Custom Exception	Create by extending Exception or RuntimeException
+Spring Boot Handling	Use @ControllerAdvice, @ExceptionHandler, @ResponseStatus
+Best Practice	Handle specific exceptions, use meaningful responses, avoid empty catch blocks
