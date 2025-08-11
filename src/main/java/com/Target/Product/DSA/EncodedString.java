@@ -7,6 +7,7 @@ public class EncodedString {
 		encodedString(s);
 	}
 	
+	// Tc -O(n3)  and sc - O(n2)
 	public static void encodedString(String s) {
 		int n = s.length();
 		String[] encoded = new String[n + 1];
