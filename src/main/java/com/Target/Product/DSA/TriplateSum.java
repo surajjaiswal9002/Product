@@ -16,6 +16,7 @@ public class TriplateSum {
 		System.out.println(" Triple sum : "+Arrays.toString(triplate));
 	}
 	
+	// tc- O(n2) and sc - O(K);
 	public static List<int[]> tripleSum(int[] nums, int sum) {
 		int n = nums.length;
 		
