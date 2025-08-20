@@ -17,8 +17,8 @@ public class InterLeavingString {
 	public static void findInterLeavingString(String a, String b) {
 		String ans  = "";
 		int minLength = Math.min(a.length(), b.length());
-		int i = 0;
 		
+		int i = 0;
 		for(; i < minLength; i++) {
 			ans += a.charAt(i)+"" + b.charAt(i)+"";
 		}

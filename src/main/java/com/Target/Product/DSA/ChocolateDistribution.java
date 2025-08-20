@@ -27,6 +27,9 @@ public class ChocolateDistribution {
 			}
 		}
 		
+		
+		System.out.println(" Total Chocolate chocolatesDist : "+Arrays.toString(chocolatesDist));
+		
 		// step 3 given chocolate from right to left 
 		for(int i = n - 2; i >= 0; i--) {
 			if(ranks[i] < ranks[i + 1]) {
