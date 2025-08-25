@@ -1,5 +1,7 @@
 package com.Target.Product.designpattern;
 
+
+//interface
 interface vechile{
 
     void drive();

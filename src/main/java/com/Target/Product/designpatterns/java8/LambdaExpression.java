@@ -27,6 +27,8 @@ public class LambdaExpression {
         List<String> list = Arrays.asList("mango", "apple", "coconuts", "banana");
 
         list.forEach(n -> System.out.print(n + ", "));
+        System.out.println(" \n Alternate way ***** ");
+        list.forEach(System.out::println);
 
 
 

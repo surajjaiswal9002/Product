@@ -12,9 +12,9 @@ interface PaymentStrategy{
 
 // concrete strategy
 class CreditcardPayment implements PaymentStrategy{
-	private String creditcardNumber;
+	private long creditcardNumber;
 	
-	public CreditcardPayment(String creditcardNumber){
+	public CreditcardPayment(long creditcardNumber){
 		this.creditcardNumber = creditcardNumber;
 	}
 	
@@ -55,7 +55,7 @@ class PaymentServices{
 public class StrategyDesignPattern {
 	public static void main(String[] args) {
 		
-		PaymentServices ccPayment = new PaymentServices(new CreditcardPayment("1111-1111-1111-1111"));
+		PaymentServices ccPayment = new PaymentServices(new CreditcardPayment(111111111111111L));
 		ccPayment.processOrder(500);
 		
 		PaymentServices paypalPayment = new PaymentServices(new Paypalpayment("surajjaiswal@gmail.com"));
