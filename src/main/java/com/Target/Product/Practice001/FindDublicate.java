@@ -20,10 +20,9 @@ public class FindDublicate {
 			if(!set.add(arr[i])) {
 				doblicateList.add(arr[i]);
 			}
-			
-			set.add(arr[i]);
 		}
 		
+		System.out.println(" set : "+set);
 		System.out.println(" dublicate : "+doblicateList);
 	}
 }

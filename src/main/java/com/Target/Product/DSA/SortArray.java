@@ -20,7 +20,7 @@ public class SortArray {
 		// step 1 - max number find
 		int max = Integer.MIN_VALUE;
 		for(int num : nums) {
-			if(max < num) {
+			if(num > max) {
 				max = num;
 			}
 		}

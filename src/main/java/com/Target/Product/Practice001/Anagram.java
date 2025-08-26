@@ -11,6 +11,13 @@ public class Anagram {
 	public static void checkAnagram(String a, String b) {
 		int[] freq = new int[26];
 		
+		//  base case
+		if(a.length() != b.length()) {
+			System.out.println(" Not a anagram");
+			return;
+		}
+		
+		
 		for(int i = 0; i < a.length(); i++) {
 			char ch1 = a.charAt(i);
 			char ch2 = b.charAt(i);

@@ -11,10 +11,7 @@ public class SortArrayIncreasingFreq {
         int n = nums.length;
         Map<Integer, Integer> map = new HashMap<>();
         
-        for(int i = 0; i < n; i++) {
-        	map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
-        }
-        
+       
         System.out.println( " map : "+map);
         
         Integer arr[] = Arrays.stream(nums).boxed().toArray(Integer[]::new);

@@ -17,11 +17,24 @@ public class RotateArrayUsingKSteps {
 		
 		k = k % n;
 		
-		swap(arr, 0, n - 1);
-		swap(arr, 0, k-1);
-		swap(arr, k, n-1);
+		swap001(arr, 0, n - 1);
+		swap001(arr, 0, k-1);
+		swap001(arr, k, n-1);
 	}
 	
+	
+	public static void swap001(int[] arr, int s, int e) {
+		
+		while(s < e) {
+			int temp = arr[s];
+			arr[s] = arr[e];
+			arr[e] = temp;
+			
+			s++;
+			e--;
+		}
+		
+	}
 	public static void swap(int[] arr, int s, int e) {
 		
 		while(s < e) {

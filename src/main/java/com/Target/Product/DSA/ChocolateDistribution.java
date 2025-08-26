@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class ChocolateDistribution {
 	public static void main(String[] args) {
 		
-		int[] students = {4, 1, 2, 3};
+		int[] students = {1,1,2,2,3,3};
 		
 		isMinChocolateDist(students);
 	}
