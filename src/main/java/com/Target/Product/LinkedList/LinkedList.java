@@ -80,7 +80,6 @@ public class LinkedList {
 		if(length == 0) return null;
 		Node temp = head;
 		Node pre = head;
-		
 		while(temp.next != null) {
 			pre = temp;
 			temp = temp.next;
@@ -98,6 +97,47 @@ public class LinkedList {
 		
 	}
 	
+	public void prepend(int data) {
+		Node newNode = new Node(data);
+		
+		if(length == 0) {
+			head = newNode;
+			tail = newNode;
+		}else {
+			newNode.next = head;
+			head = newNode;
+		}
+		length++;
+		
+	}
+	
+	public Node removeHead() {
+		if(length == 0)
+			return null;
+		
+		Node temp = head;
+		head = head.next;
+		temp.next = null;
+		length--;
+		
+		if(length == 0) {
+			tail = null;
+		}
+		
+		return temp;
+	}
+	
+	
+	public Node get(int index) {
+		if(index < 0 || index >= length) return null;
+		Node temp = head;
+		for(int i = 0; i < index; i++) {
+			temp = temp.next;
+		}
+		
+		return temp;
+	}
+	
 	public static void main(String[] args) {
 		
 		LinkedList ll = new LinkedList(10);
@@ -105,10 +145,16 @@ public class LinkedList {
 		ll.append(30);
 		ll.append(40);
 		ll.append(50);
-		
 		ll.printLinkedList();
 		ll.removeLast();
 		ll.printLinkedList();
+		ll.prepend(9); 
+		ll.printLinkedList();
+		ll.removeHead();
+		ll.printLinkedList();
+		
+		System.out.println(ll.get(2).data+" \n ");
+		
 		
 		
 	}
