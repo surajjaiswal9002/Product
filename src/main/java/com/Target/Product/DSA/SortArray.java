@@ -28,8 +28,8 @@ public class SortArray {
 		
 		// step - 2 create new array and store al the value
 		int[] count = new int[max+1];
-		for(int num : nums) {
-			count[num]++;
+		for(int i = 0; i < n; i++) {
+			count[nums[i]]++;
 		}
 		
 		System.out.println(" Count array : "+Arrays.toString(count));

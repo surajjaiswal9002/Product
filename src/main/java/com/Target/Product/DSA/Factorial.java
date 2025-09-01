@@ -2,13 +2,11 @@ package com.Target.Product.DSA;
 
 public class Factorial {
 	public static void main(String[] args) {
-		
 		int n  = 5;
 		
 		factorial(n);
 		int ans = recrsionFactorial(n);
-		System.out.println(" Recursion "
-				+ "factorial : "+ans);
+		System.out.println(" Recursion "+ "factorial : "+ans);
 		
 	}
 	

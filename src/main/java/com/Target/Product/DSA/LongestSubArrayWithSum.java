@@ -32,7 +32,6 @@ public class LongestSubArrayWithSum {
 				map.put(sum, i);
 			}
 		}
-		
 		return maxLen;
 	}
 }

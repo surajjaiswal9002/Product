@@ -15,25 +15,25 @@ public class FindMediumOfSortedArr {
 		int n1 = num1.length;
 		int n2 = num2.length;
 		
-		int[] medium = new int[n1+n2];
+		int[] mediumArr = new int[n1+n2];
 		
 		for(int i = 0; i < n1; i++) {
-			medium[i] = num1[i];
+			mediumArr[i] = num1[i];
 		}
 		
 		for(int i = 0; i < n2; i++) {
-			medium[n1+i] = num2[i];
+			mediumArr[n1+i] = num2[i];
 		}
 		
-		System.out.println(" medium : "+Arrays.toString(medium));
+		System.out.println(" medium : "+Arrays.toString(mediumArr));
 		 
-		Arrays.sort(medium);
-		int n3 = medium.length;
+		Arrays.sort(mediumArr);
+		int n3 = mediumArr.length;
 		int ans = 0;
 		if(n3 % 2 == 0) {
-			ans = (medium[n3/2] + medium[n3/2 - 1] ) / 2;
+			ans = (mediumArr[n3/2] + mediumArr[n3/2 - 1] ) / 2;
 		}else {
-			ans = medium[n3/2];
+			ans = mediumArr[n3/2];
 		}
 		
 		System.out.println(" medium of given arr : "+ans);

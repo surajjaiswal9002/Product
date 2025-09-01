@@ -24,6 +24,7 @@ public class KthLargestElement {
 		
 		for(int i = 0; i < nums.length; i++) {
 			minHeap.offer(nums[i]);
+			
 			if(minHeap.size()  > k) {
 				minHeap.poll();
 			}
