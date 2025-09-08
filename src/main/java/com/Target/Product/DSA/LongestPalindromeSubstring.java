@@ -18,7 +18,7 @@ public class LongestPalindromeSubstring {
 		
 		
 		for(int i = 0; i < n; i++) {
-			int len1 = expandAroundCenter(s, i, i); // Odd  length of palindrome
+			int len1 = expandAroundCenter(s, i, i); // Odd  length of palindrome 1, 3, 5, 7
 			int len2 = expandAroundCenter(s, i, i+1);  // even length of palindrome
 			int len = Math.max(len1, len2);
 			

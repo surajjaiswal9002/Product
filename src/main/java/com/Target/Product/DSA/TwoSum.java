@@ -16,18 +16,20 @@ public class TwoSum {
 	// Tc - O(n) and sc - o(n)
 	public static int[] isTwoSum(int[] nums, int target) {
 		int n = nums.length;
-		Map<Integer, Integer> map = new HashMap<>();
+		Map<Integer, Integer> map = new HashMap<>();  // -- 
 		
 		for(int i = 0; i < n; i++) {
 
-			int temp = target - nums[i];
+			int temp = target - nums[i];  // 9 - 2 = 7
 			
 			if(map.containsKey(temp)) {
 				return new int[] {nums[i], nums[map.get(temp)]};
 			}
 			
-			map.put(nums[i], i);
+			map.put(nums[i], i);  // 2 0
 		}
+		
+		
 		return new int[] {-1, -1};
 	}
 }

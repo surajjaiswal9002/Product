@@ -21,7 +21,9 @@ public class LinkedListSwapNode {
 
         System.out.println(" Before Swap ");
         printLinkedList(head);
+        
         head = swapNode(head);
+        
         System.out.println(" After Swap ");
         printLinkedList(head);
     }

@@ -21,6 +21,8 @@ public class TriplateSum {
 		int n = nums.length;
 		
 		List<int[]> list = new ArrayList<int[]>();
+		
+		
 		for(int i = 0; i < n; i++) {
 			int left = i + 1;
 			int right = n - 1;
