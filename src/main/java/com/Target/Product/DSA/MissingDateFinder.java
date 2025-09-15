@@ -14,6 +14,7 @@ public class MissingDateFinder {
 		// remove one date
 		allDates.remove("2025-01-05");
 		
+		
 		// Now find missing date
 		String missing = findMissingDateUsingSet(allDates, year);
 		System.out.println(" Missing Dates : "+missing);
@@ -38,8 +39,8 @@ public class MissingDateFinder {
 	
 	public static String findMissingDateUsingSet(List<String> allDates, int year) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		Set<LocalDate> givenDates = new HashSet<LocalDate>();
 		
+		Set<LocalDate> givenDates = new HashSet<LocalDate>();
 		for(String d : allDates) {
 			givenDates.add(LocalDate.parse(d, formatter));
 		}

@@ -12,18 +12,19 @@ public class TwoSum {
 		int[] ans = isTwoSum(nums, target);
 		System.out.println(" two sum : " + Arrays.toString(ans));
 	}
+	
 
 	// Tc - O(n) and sc - o(n)
 	public static int[] isTwoSum(int[] nums, int target) {
 		int n = nums.length;
-		Map<Integer, Integer> map = new HashMap<>();  // -- 
+		Map<Integer, Integer> map = new HashMap<>();  // --   
 		
 		for(int i = 0; i < n; i++) {
 
 			int temp = target - nums[i];  // 9 - 2 = 7
 			
 			if(map.containsKey(temp)) {
-				return new int[] {nums[i], nums[map.get(temp)]};
+				return new int[] {map.get(temp), i};
 			}
 			
 			map.put(nums[i], i);  // 2 0

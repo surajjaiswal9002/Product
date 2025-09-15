@@ -11,6 +11,7 @@ public class TrappingRain {
 	public static void snowPack(int[] nums) {
 		int n = nums.length;
 		
+		
 		int[] left = new int[n];
 		int[] right = new int[n];
 		

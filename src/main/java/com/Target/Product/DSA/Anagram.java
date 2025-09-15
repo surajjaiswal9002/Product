@@ -10,6 +10,7 @@ public class Anagram {
 		checkAnagram(a, b);
 	}
 
+	
 	// tc - O(n) and sc - o(1)
 	public static void checkAnagram(String a, String b) {
 		int[] freq = new int[26];

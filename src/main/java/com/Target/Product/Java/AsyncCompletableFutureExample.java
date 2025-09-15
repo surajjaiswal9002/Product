@@ -18,6 +18,7 @@ public class AsyncCompletableFutureExample {
 		});
 
 		
+		
 		async.thenAccept(res -> System.out.println(res)).join();
 	}
 }

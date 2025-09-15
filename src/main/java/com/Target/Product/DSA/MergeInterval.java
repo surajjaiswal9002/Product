@@ -15,6 +15,7 @@ public class MergeInterval {
 	}
 	
 	
+	
 	// O(n .log n) and sc - O(n)
 	public static int[][] merge(int[][] intervals){
 		int n = intervals.length;

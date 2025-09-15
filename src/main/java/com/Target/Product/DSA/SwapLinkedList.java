@@ -13,6 +13,7 @@ public class SwapLinkedList {
 		printLinkedList(res);
 	}
 	
+	
 	public static ListNode swapLinkedList(ListNode head) {
 		if(head == null || head.next == null) {
 			return head;

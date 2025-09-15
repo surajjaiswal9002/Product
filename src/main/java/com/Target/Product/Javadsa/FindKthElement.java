@@ -9,6 +9,7 @@ public class FindKthElement {
         System.out.println("Kth element is: " + result);
     }
 
+    
     public static int findKthElement(int[] arr1, int[] arr2, int k){
         int i = 0; int j = 0; int count = 0;
 

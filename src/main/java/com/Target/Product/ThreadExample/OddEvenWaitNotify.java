@@ -2,7 +2,7 @@ package com.Target.Product.ThreadExample;
 
 class Printer {
     private boolean isOddTurn = true; // Odd starts first
-
+    
     public synchronized void printOdd(int number) {
         while (!isOddTurn) { // not odd's turn
             try {

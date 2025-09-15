@@ -8,6 +8,7 @@ public class LongestSubStringWithoutRepeatingChar {
 		lenOfLongestSubString(s);
 	}
 
+	
 	// Tc - O(n) and sc - O(min(m, n) -- using sliding window
 	public static void lenOfLongestSubString(String s) {
 		HashSet<Character> uniqueSet = new HashSet<Character>();

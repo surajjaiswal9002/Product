@@ -9,7 +9,7 @@ class MyThread extends Thread {
     }
 
     @Override
-    public void run() {
+    public synchronized void run() {
         // logic for the thread
         for (int i = 1; i <= 5; i++) {
             System.out.println(taskName + " - Count: " + i);

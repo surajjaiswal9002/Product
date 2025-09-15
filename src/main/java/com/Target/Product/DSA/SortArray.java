@@ -13,6 +13,7 @@ public class SortArray {
 	}
 	
 	
+	
 	// tc - O(n) and sc - O(n)
 	public static int[] sortArr(int[] nums) {
 		int n = nums.length;
@@ -33,6 +34,7 @@ public class SortArray {
 		}
 		
 		System.out.println(" Count array : "+Arrays.toString(count));
+		
 		
 		// step - 3 to store int asc order
 		int index = 0;

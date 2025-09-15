@@ -11,6 +11,7 @@ public class LongestSubArrayWithSum {
 	     System.out.println(" Maximum SubArray with sum = k length : "+maxSubArraySum(arr, k));
 	}
 	
+	// tc O(n) and sc -- O(n)
 	public static int maxSubArraySum(int[] nums, int k) {
 		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 		int sum = 0;

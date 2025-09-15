@@ -1,6 +1,6 @@
 package com.Target.Product.DSA;
 
-public class ListNode {
+class ListNode {
 	int data;
 	ListNode next;
 	

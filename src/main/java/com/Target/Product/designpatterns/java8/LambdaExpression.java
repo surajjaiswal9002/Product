@@ -12,7 +12,9 @@ interface Calculator {
         return a * b;
     }
 
-  
+    static int substract(int a, int b) {
+        return a - b;
+    }
 }
 
 public class LambdaExpression {

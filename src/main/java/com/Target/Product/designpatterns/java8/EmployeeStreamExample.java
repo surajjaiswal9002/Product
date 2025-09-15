@@ -8,6 +8,7 @@ public class EmployeeStreamExample {
 		
 		List<Employee> employees = new ArrayList<>();
 
+		
         employees.add(new Employee(101, "Alice", 23, "HR", 45000, "Bangalore"));
         employees.add(new Employee(102, "Bob", 25, "IT", 60000, "Bangalore"));
         employees.add(new Employee(103, "Charlie", 30, "Finance", 75000, "Delhi"));
@@ -27,12 +28,14 @@ public class EmployeeStreamExample {
                 .map(e -> e.name + " - " + e.salary) // name + salary
                 .collect(Collectors.toList());
         
+        
         List<Employee> filtered = employees.stream()
                 .filter(e -> e.age >= 25)
                 .filter(e -> e.salary > 50000)
                 .filter(e -> e.city.equals("Bangalore"))
                 .collect(Collectors.toList());
 
+       
         System.out.println("Employees " + filtered);
         names.forEach(System.out::println);
 	}

@@ -10,7 +10,9 @@ public class Accurance {
 		findAccuranceUsingMap(s);
 		accuranceUsing26Char(s);
 	}
-
+	
+	
+	
 	// tc - O(n) and sc - O(n)
 	public static void findAccuranceUsingMap(String s) {
 		HashMap<Character, Integer> map = new HashMap<>();
