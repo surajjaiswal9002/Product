@@ -4,10 +4,10 @@ import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-class Person {
+class Person12 {
     String name;
     int age;
-    Person(String name, int age) { this.name = name; this.age = age; }
+    Person12(String name, int age) { this.name = name; this.age = age; }
     
     @Override
     public String toString() {
@@ -46,14 +46,13 @@ public class StreamExample {
 		System.out.println(sum2);
 		
 		
-		List<Person> people = Arrays.asList(
-			    new Person("Suraj", 27),
-			    new Person("Amit", 27),
-			    new Person("Ravi", 30)
+		List<Person12> people = Arrays.asList(
+			    new Person12("Suraj", 27),
+			    new Person12("Amit", 27),
+			    new Person12("Ravi", 30)
 			);
 
-			Map<Integer, List<Person>> groupedByAge = people.stream()
-			        .collect(Collectors.groupingBy(p -> p.age));
+			Map<Integer, List<Person12>> groupedByAge = people.stream().collect(Collectors.groupingBy(p -> p.age));
 
 			System.out.println(groupedByAge);
 			

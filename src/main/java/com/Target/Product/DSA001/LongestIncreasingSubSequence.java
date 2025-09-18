@@ -22,7 +22,6 @@ public class LongestIncreasingSubSequence {
 				res.add(n);
 			}else {
 				int idx = binarySearch(res, n);
-				System.out.println(" -- idx = "+idx+", n = "+n);
 				res.set(idx, n);
 			}
 		}

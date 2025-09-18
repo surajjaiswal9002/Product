@@ -3,14 +3,13 @@ package com.Target.Product.SystemOriendedDSA;
 import java.util.*;
 
 public class RateLimiterSlidingWindow {
-
 	private final int maxRequest;
-	private final long windowSizeInMillis;
+	private final long windowSizeMillis;
 	private final Deque<Long> requestTimeStamps;
 	
-	public RateLimiterSlidingWindow(int maxRequest, long windowSizeInMillis) {
+	public RateLimiterSlidingWindow(int maxRequest, long windowSizeMillis) {
 		this.maxRequest = maxRequest;
-		this.windowSizeInMillis = windowSizeInMillis;
+		this.windowSizeMillis = windowSizeMillis;
 		this.requestTimeStamps = new ArrayDeque<Long>();
 	}
 	
@@ -18,12 +17,12 @@ public class RateLimiterSlidingWindow {
 	public synchronized boolean allowRequest() {
 		long now = System.currentTimeMillis();
 		
-		while(!requestTimeStamps.isEmpty() && now - requestTimeStamps.peekFirst() >= windowSizeInMillis) {
+		while(!requestTimeStamps.isEmpty() && now - requestTimeStamps.peekFirst() >= windowSizeMillis) {
 			requestTimeStamps.pollFirst();
 		}
 		
 		if(requestTimeStamps.size() < maxRequest) {
-			requestTimeStamps.add(now);
+			requestTimeStamps.addLast(now);
 			return true;
 		}
 		
@@ -32,11 +31,11 @@ public class RateLimiterSlidingWindow {
 	
 	public static void main(String[] args) throws InterruptedException {
 		
-		RateLimiterSlidingWindow rateLimiter = new RateLimiterSlidingWindow(3, 1000);
+		RateLimiterSlidingWindow limiter = new RateLimiterSlidingWindow(3, 1000);
 		
-		for(int i =0; i < 5; i++) {
-			System.out.println(" Request "+(i+1)+"  allowed? "+rateLimiter.allowRequest());
-			Thread.sleep(200);
+		for(int i = 0; i < 5; i++) {
+			System.out.println(" Request "+(i + 1)+" allowed? "+limiter.allowRequest());
+			Thread.sleep(2000);
 		}
 		
 

@@ -20,14 +20,13 @@ public class GenerateParanthesis {
 	}
 	
 	
-	//O(m * N) and s c = O(m * N
+	//O(m * N) and s c = O(m * N)
 	public static void backTrack(List<String> result, String current, int open, int close, int max) {
 		//base case
 		if(current.length() == max * 2) {
 			result.add(current);
 			return;
 		}
-		
 		
 		// (
 		if(open < max) {
