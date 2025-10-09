@@ -11,7 +11,6 @@ public class FirstNonRepeatedChar {
         	if(c != ' ') {
         		  freq[c - 'a']++;
         	}
-          
         }
 
         // Step 2: Find first non-repeated character

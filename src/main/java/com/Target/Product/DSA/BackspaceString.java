@@ -11,6 +11,7 @@ public class BackspaceString {
 		System.out.println(processString(str));
 	}
 	
+	// tc - o(N) and sc(N)
 	public static String processString(String s) {
 		Stack<Character> stack = new Stack<>();
 		

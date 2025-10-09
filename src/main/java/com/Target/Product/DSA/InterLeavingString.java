@@ -7,9 +7,6 @@ public class InterLeavingString {
 		
 		String a = "abc";
 		String b = "pqrst";
-
-		
-		
 		findInterLeavingString(a, b);
 	}
 	

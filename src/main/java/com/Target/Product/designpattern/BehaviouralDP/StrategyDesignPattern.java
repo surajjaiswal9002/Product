@@ -1,4 +1,4 @@
-package com.Target.Product.designpattern;
+package com.Target.Product.designpattern.BehaviouralDP;
 
 
 // strategy DP is a behavioral DP that let you define a family of algorithms, 

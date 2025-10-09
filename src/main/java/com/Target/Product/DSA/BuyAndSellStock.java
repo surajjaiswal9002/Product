@@ -7,6 +7,7 @@ public class BuyAndSellStock {
 		
 		maxProfit(prices);
 	}
+	
 	// Tc - O(n) and sc - O(1)
 	public static void maxProfit(int[] prices) {
 		int min = Integer.MAX_VALUE;

@@ -8,6 +8,7 @@ public class ArmstrongNumber {
 		isArmstrongNum(n);
 	}
 
+	// Tc - O(n) and sc - O(1)
 	public static void isArmstrongNum(int n) {
 
 		int temp = n;

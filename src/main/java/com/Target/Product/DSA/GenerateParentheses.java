@@ -3,12 +3,17 @@ package com.Target.Product.DSA;
 import java.util.*;
 
 public class GenerateParentheses {
+	
+	
+	// tc - O(n) and sc = O(n)
     public static List<String> generateParenthesis(int n) {
         List<String> result = new ArrayList<>();
         backtrack(result, "", 0, 0, n);
         return result;
     }
 
+    
+    
     private static void backtrack(List<String> result, String current, int open, int close, int max) {
         // Base case: if the current string is complete
         if (current.length() == max * 2) {

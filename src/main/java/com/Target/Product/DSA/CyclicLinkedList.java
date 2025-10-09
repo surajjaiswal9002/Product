@@ -19,9 +19,7 @@ public class CyclicLinkedList {
         System.out.println("Cycle present after removal? " + isCyclic(head));
 
         // Print list
-        printList(head);
-
-		
+        printList(head);		
 	}
 	
 	// tc - O(n) and sc -  O(1)
@@ -41,12 +39,12 @@ public class CyclicLinkedList {
 		return false;
 	}
 	
-	// Remove cycle if present
+	// Remove cycle if present  O(n) + O(k) + O(m) -> O(n) and sc - O(1)
 	public static void removeCycle(ListNode head) {
 	    ListNode slow = head;
 	    ListNode fast = head;
 
-	    // Step 1: Detect cycle
+	    // Step 1: Detect cycle - O(n)
 	    while (fast != null && fast.next != null) {
 	        slow = slow.next;
 	        fast = fast.next.next;
@@ -59,14 +57,14 @@ public class CyclicLinkedList {
 	    // No cycle
 	    if (fast == null || fast.next == null) return;
 
-	    // Step 2: Find start of cycle
+	    // Step 2: Find start of cycle - O(k)
 	    slow = head;
 	    while (slow != fast) {
 	        slow = slow.next;
 	        fast = fast.next;
 	    }
 
-	    // Step 3: Find the last node in the cycle
+	    // Step 3: Find the last node in the cycle  - O(m)
 	    ListNode lastNode= slow;
 	    while (lastNode.next != slow) {
 	        lastNode = lastNode.next;

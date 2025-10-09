@@ -1,4 +1,4 @@
-package com.Target.Product.DSA;
+1package com.Target.Product.DSA;
 
 import java.util.Arrays;
 
@@ -8,6 +8,7 @@ public class TrappingRain {
 		snowPack(nums);
 	}
 	
+	//ttc - O(n) and sc - (n)
 	public static void snowPack(int[] nums) {
 		int n = nums.length;
 		

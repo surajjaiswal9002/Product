@@ -15,9 +15,6 @@ class cell{
 	}
 }
 
-
-
-
 // TC - O(n * m) and sc - O(n * m)
 public class RottenOrange {
 	public static void main(String[] args) {

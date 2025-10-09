@@ -1,4 +1,4 @@
-package com.Target.Product.designpattern;
+package com.Target.Product.designpattern.creational;
 
 public class SingleTonDP {
     // step1 - private static variable to hold the single instance

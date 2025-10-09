@@ -29,6 +29,9 @@ public class EmployeeStreamExample {
                 .collect(Collectors.toList());
         
         
+        System.out.println(" 11 -> "+names);
+        
+        
         List<Employee> filtered = employees.stream()
                 .filter(e -> e.age >= 25)
                 .filter(e -> e.salary > 50000)

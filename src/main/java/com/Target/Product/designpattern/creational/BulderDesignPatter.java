@@ -1,4 +1,4 @@
-package com.Target.Product.designpattern;
+package com.Target.Product.designpattern.creational;
 
 
 

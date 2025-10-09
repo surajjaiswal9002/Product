@@ -1,4 +1,4 @@
-package com.Target.Product.designpattern;
+package com.Target.Product.designpattern.creational;
 
 
 //interface
@@ -46,3 +46,6 @@ public class FactoryDesignPattern {
         v.drive();
     }
 }
+
+
+

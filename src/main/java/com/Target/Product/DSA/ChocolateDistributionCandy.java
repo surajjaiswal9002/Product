@@ -2,14 +2,17 @@ package com.Target.Product.DSA;
 
 import java.util.Arrays;
 
-public class ChocolateDistribution {
+public class ChocolateDistributionCandy {
 	public static void main(String[] args) {
 		
 		int[] students = {1,1,2,2,3,3};
+		//int[] students = {1,0,2};
 		
 		isMinChocolateDist(students);
 	}
 	
+	
+	// tc - O(n) and sc - O(n)
 	public static void isMinChocolateDist(int[] ranks) {
 		int n = ranks.length;
 		int[] chocolatesDist = new int[n];
@@ -22,7 +25,7 @@ public class ChocolateDistribution {
 		
 		// Step 2  give min chocolate from left to right
 		for(int i = 1; i < n; i++) {
-			if(ranks[i] < ranks[i - 1]) {
+			if(ranks[i] > ranks[i - 1]) {
 				chocolatesDist[i] = chocolatesDist[i - 1] + 1;
 			}
 		}
@@ -32,7 +35,7 @@ public class ChocolateDistribution {
 		
 		// step 3 given chocolate from right to left 
 		for(int i = n - 2; i >= 0; i--) {
-			if(ranks[i] < ranks[i + 1]) {
+			if(ranks[i] > ranks[i + 1]) {
 				chocolatesDist[i] = Math.max(chocolatesDist[i], chocolatesDist[i + 1] + 1);
 			}
 		}

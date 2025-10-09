@@ -30,8 +30,7 @@ public class KthLargestElement {
 				minHeap.poll();
 			}
 		}
-		
-		System.out.println(minHeap.peek());
+		System.out.println(minHeap);
 	}
 	
 	// Tc - O(n log n) and sc - o(1)

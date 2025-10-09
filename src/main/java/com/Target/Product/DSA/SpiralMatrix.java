@@ -33,7 +33,7 @@ public class SpiralMatrix {
 			right--;
 			// right left
 			if(top <= bottom) {
-				for(int i = right; i>+left; i--) {
+				for(int i = right; i>=left; i--) {
 					res.add(matrix[bottom][i]);
 				}
 				bottom--;

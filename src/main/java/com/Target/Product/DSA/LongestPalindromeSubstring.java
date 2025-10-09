@@ -9,6 +9,8 @@ public class LongestPalindromeSubstring {
 		System.out.println(" ans : "+ans);
 	}
 	
+	
+	// O(n2) ans sc - O(1)
 	public static String palindromeSubstring(String s) {
 		int n = s.length();
 		int start = 0;
