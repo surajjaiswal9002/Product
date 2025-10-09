@@ -20,7 +20,7 @@ class LRUCache{
 	
 	//get
 	public int get(int n) {
-		if(cac)
+		return -12;
 	}
 	
 	// put

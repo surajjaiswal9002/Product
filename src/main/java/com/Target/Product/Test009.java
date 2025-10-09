@@ -28,7 +28,7 @@ public class Test009 {
 		
 		System.out.println(listOfMap);
 		
-		fruits.stream().filter(n -> n.startWith("M")).collect(Collector.toLiust)
+		//fruits.stream().filter(n -> n.startWith("M")).collect(Collector.toLiust);
 		
 	}
 }

@@ -31,7 +31,7 @@ class Category implements CatalogComponent {
 }
 
 //Usage
-public class WalmartCompositeDemo {
+public class CompositePattern {
  public static void main(String[] args) {
      Product iphone = new Product("iPhone");
      Product galaxy = new Product("Samsung Galaxy");
@@ -47,6 +47,3 @@ public class WalmartCompositeDemo {
  }
 }
 
-public class CompositePattern {
-
-}

@@ -27,7 +27,7 @@ Invitation:Round 1 || SSE Backend || NoBroker
 
 */
 
-public class Interview {
+public class Intervieww {
 	public static void main(String[] args) {
 		
 		int[] nums = {1, 1, 2, 2, 2, 3};  // [3,1,1,2,2,2]  working
