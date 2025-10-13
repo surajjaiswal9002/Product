@@ -12,6 +12,7 @@ public class SortArrayDutchNationalFlag {
 	}
 	
 	
+	// Tc - O(n) and SCc = O(1)
 	public static void sortColor(int[] nums) {
 		int low = 0;
 		int mid = 0;

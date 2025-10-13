@@ -14,7 +14,7 @@ public class Buy2AndSell2Stock {
 		
 		for(int i = 1; i < n; i++) {
 			if(prices[i] > prices[i - 1]) {
-				maxProfit += prices[i] - prices[i - 1];
+				maxProfit += maxProfit + prices[i] - prices[i - 1];
 			}
 		}
 		

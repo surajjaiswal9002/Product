@@ -14,6 +14,8 @@ public class KthSmallestElement {
 		findKthElemnt(arr, k);
 	}
 	
+	
+	// tc - O(n log k) and sc = O(k)
 	public static void findKthElemnt(int[] arr, int k) {
 		PriorityQueue<Integer> maxHeap = new PriorityQueue<Integer>((a, b) -> b - a);
 		//PriorityQueue<Integer> maxHeap = new PriorityQueue<Integer>(Collections.reverseOrder());

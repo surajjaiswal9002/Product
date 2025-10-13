@@ -9,6 +9,8 @@ public class JumpGame {
 		System.out.println(istrue);
 	}
 	
+	
+	// tc = O(n) ands sc - (1)
 	public static boolean jumpGame(int[] jump) {
 		int reach = 0;
 		int n = jump.length;

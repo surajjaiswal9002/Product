@@ -15,6 +15,11 @@ public class TwoSum {
 	
 
 	// Tc - O(n) and sc - o(n)
+	/**
+	 * @param nums
+	 * @param target
+	 * @return
+	 */
 	public static int[] isTwoSum(int[] nums, int target) {
 		int n = nums.length;
 		Map<Integer, Integer> map = new HashMap<>();  // --   
@@ -28,6 +33,7 @@ public class TwoSum {
 			}
 			
 			map.put(nums[i], i);  // 2 0
+			
 		}
 		
 		

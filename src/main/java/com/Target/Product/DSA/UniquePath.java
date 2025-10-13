@@ -1,5 +1,7 @@
 package com.Target.Product.DSA;
 
+import java.util.Arrays;
+
 public class UniquePath {
 	public static void main(String[] args) {
 		int m = 3;
@@ -12,7 +14,21 @@ public class UniquePath {
 			
 	}
 	
+	// Tc - O(n * m) and sc - O(n)
+	public static int findUniquePath01(int m, int n) {
+	    int[] dp = new int[n];
+	    Arrays.fill(dp, 1);
+	    
+	    for (int i = 1; i < m; i++) {
+	        for (int j = 1; j < n; j++) {
+	            dp[j] += dp[j - 1];
+	        }
+	    }
+	    return dp[n - 1];
+	}
+
 	
+	// Tc - O(n * m) and sc - O(n * m)
 	public static int findUniquePath(int m, int n) {
 		int[][] dp = new int[m][n];
 		

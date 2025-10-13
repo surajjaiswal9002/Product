@@ -1,4 +1,4 @@
-package com.Target.Product.DSA002;
+package com.Target.Product.DSA;
 
 public class Candy {
 	public static void main(String[] args) {

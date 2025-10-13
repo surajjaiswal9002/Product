@@ -1,5 +1,8 @@
 package com.Target.Product.DSA;
 
+
+
+// Tc - O(n) and sc - O(1)
 public class FirstNonRepeatedChar {
     public static void main(String[] args) {
         String input = " aprog ramming";
