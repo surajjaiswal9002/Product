@@ -41,5 +41,22 @@ public class EmployeeStreamExample {
        
         System.out.println("Employees " + filtered);
         names.forEach(System.out::println);
+        
+        
+        
+        List<String> newList = employees.stream()
+        	    .filter(e -> e.age >= 25)
+        	    .filter(e -> e.salary > 50000)
+        	    .filter(e -> e.city.equals("Bangalore"))
+        	    .sorted(
+        	        Comparator.comparing((Employee e) -> e.city)
+        	                  .thenComparing(e -> e.salary)
+        	                  .reversed() // reverse overall order
+        	    )
+        	    .map(e -> e.name + " - " + e.salary)
+        	    .collect(Collectors.toList());
+        
+        System.out.println("newList - >"+newList);
+
 	}
 }

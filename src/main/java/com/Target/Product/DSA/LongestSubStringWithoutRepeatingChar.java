@@ -33,7 +33,7 @@ public class LongestSubStringWithoutRepeatingChar {
 		}
 
 		String LongestSubstring = s.substring(startIndex, startIndex + lenOfLongestChar);
-		System.out.println(uniqueSet);
+		
 		System.out.println(" Length of Longest Substring : " + lenOfLongestChar);
 		System.out.println("  Longest Substring : " + LongestSubstring);
 	}

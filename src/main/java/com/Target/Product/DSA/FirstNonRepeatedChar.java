@@ -18,7 +18,7 @@ public class FirstNonRepeatedChar {
 
         // Step 2: Find first non-repeated character
         char result = 0;
-        for (char c : input.toCharArray()) {
+        for(char c : input.toCharArray()) {
             if ( c != ' ' && freq[c - 'a'] == 1) {
                 result = c;
                 break;

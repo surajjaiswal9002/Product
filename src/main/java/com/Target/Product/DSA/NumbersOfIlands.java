@@ -61,7 +61,7 @@ public class NumbersOfIlands {
 			int row1 = curr.first;
 			int col1 = curr.last;
 			
-			for(int i = 0; i < 4; i ++) {
+			for(int i = 0; i < 4; i++) {
 				
 				int nRow = row1 + dirRow[i];
 				int nCol = col1 + dirCol[i];

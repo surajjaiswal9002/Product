@@ -3,7 +3,7 @@ package com.Target.Product.DSA;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LongestSubArrayWithSum {
+public class MaximumSubArrayWithSum {
 	public static void main(String[] args) {
 		 int[] arr = {10, 5, 2, 7, 1, 9};
 	        int k = 15;

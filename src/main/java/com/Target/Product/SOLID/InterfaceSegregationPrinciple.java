@@ -33,7 +33,7 @@ class CreditCardPaymentt implements CardPayment {
     }
 }
 
-class GooglePayy implements UPIPayment, WalletPayment {
+class Phonepay implements UPIPayment, WalletPayment {
     public void payWithUPI(double amount) {
         System.out.println("Paid $" + amount + " via UPI using Google Pay");
     }
@@ -52,7 +52,7 @@ public class InterfaceSegregationPrinciple {
         CreditCardPaymentt card = new CreditCardPaymentt();
         card.payWithCard(250);
 
-        GooglePayy gpay = new GooglePayy();
+        Phonepay gpay = new Phonepay();
         gpay.payWithUPI(300);
         gpay.payWithWallet(150);
     }
