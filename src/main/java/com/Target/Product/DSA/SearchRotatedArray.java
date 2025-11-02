@@ -1,7 +1,7 @@
 package com.Target.Product.DSA;
 
 
-// tc - Olog n) ans sc - O(1)
+// tc - O(log n) ans sc - O(1)
 public class SearchRotatedArray {
     public static int search(int[] nums, int target) {
         int low = 0, high = nums.length - 1;

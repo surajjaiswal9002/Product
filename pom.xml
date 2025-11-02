@@ -82,11 +82,7 @@
 		</dependency>
 
 <!-- And a DB driver (example: MySQL) -->
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-j</artifactId>
-    <scope>runtime</scope>
-</dependency>
+
 
 	    
 	</dependencies>

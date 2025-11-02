@@ -16,7 +16,7 @@ public class RotateArrayUsingKSteps {
 		int n = arr.length;
 		
 		k = k % n;
-		
+		System.out.println(k);
 		swap001(arr, 0, n - 1);
 		swap001(arr, 0, k-1);
 		swap001(arr, k, n-1);

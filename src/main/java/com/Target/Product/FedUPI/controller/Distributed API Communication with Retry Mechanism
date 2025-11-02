@@ -1,0 +1,249 @@
+// 1. Entity - DataDistribution.java
+@Entity
+@Table(name = "data_distribution")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class DataDistribution {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @Column(columnDefinition = "TEXT")
+    private String jsonData;
+    
+    @Enumerated(EnumType.STRING)
+    private DeliveryStatus clientAStatus = DeliveryStatus.PENDING;
+    
+    @Enumerated(EnumType.STRING)
+    private DeliveryStatus clientBStatus = DeliveryStatus.PENDING;
+    
+    private Integer retryCount = 0;
+    
+    @Column(name = "created_at")
+    private LocalDateTime createdAt = LocalDateTime.now();
+    
+    @Column(name = "last_retry_at")
+    private LocalDateTime lastRetryAt;
+    
+    public enum DeliveryStatus {
+        PENDING, DELIVERED, FAILED
+    }
+}
+
+// 2. Repository - DataDistributionRepository.java
+@Repository
+public interface DataDistributionRepository extends JpaRepository<DataDistribution, Long> {
+    
+    @Query("SELECT d FROM DataDistribution d WHERE " +
+           "(d.clientAStatus = 'PENDING' OR d.clientBStatus = 'PENDING') " +
+           "AND d.retryCount < :maxRetries")
+    List<DataDistribution> findPendingDeliveries(@Param("maxRetries") int maxRetries);
+}
+
+// 3. Configuration - RestTemplateConfig.java
+@Configuration
+public class RestTemplateConfig {
+    
+    @Bean
+    public RestTemplate restTemplate() {
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        factory.setConnectTimeout(5000); // 5 seconds
+        factory.setReadTimeout(5000);
+        return new RestTemplate(factory);
+    }
+}
+
+// 4. Application Properties Configuration
+@Configuration
+@ConfigurationProperties(prefix = "client.api")
+@Data
+public class ClientApiConfig {
+    private String clientAUrl;
+    private String clientBUrl;
+    private int maxRetries = 5;
+    private int retryDelayMinutes = 5;
+}
+
+// 5. Service - DataDistributionService.java
+@Service
+@Slf4j
+public class DataDistributionService {
+    
+    @Autowired
+    private DataDistributionRepository repository;
+    
+    @Autowired
+    private RestTemplate restTemplate;
+    
+    @Autowired
+    private ClientApiConfig config;
+    
+    @Transactional
+    public DataDistribution distributeData(String jsonData) {
+        // Save to database first
+        DataDistribution distribution = new DataDistribution();
+        distribution.setJsonData(jsonData);
+        distribution = repository.save(distribution);
+        
+        // Try sending to both clients asynchronously
+        sendToClients(distribution.getId());
+        
+        return distribution;
+    }
+    
+    @Async
+    public void sendToClients(Long distributionId) {
+        DataDistribution distribution = repository.findById(distributionId)
+            .orElseThrow(() -> new RuntimeException("Distribution not found"));
+        
+        // Send to Client A
+        if (distribution.getClientAStatus() == DataDistribution.DeliveryStatus.PENDING) {
+            sendToClient("A", config.getClientAUrl(), distribution);
+        }
+        
+        // Send to Client B
+        if (distribution.getClientBStatus() == DataDistribution.DeliveryStatus.PENDING) {
+            sendToClient("B", config.getClientBUrl(), distribution);
+        }
+    }
+    
+    private void sendToClient(String clientName, String url, DataDistribution distribution) {
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            
+            HttpEntity<String> request = new HttpEntity<>(distribution.getJsonData(), headers);
+            
+            ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
+            
+            if (response.getStatusCode().is2xxSuccessful()) {
+                updateDeliveryStatus(distribution.getId(), clientName, DataDistribution.DeliveryStatus.DELIVERED);
+                log.info("Successfully sent data to Client {}", clientName);
+            }
+        } catch (Exception e) {
+            log.error("Failed to send data to Client {}: {}", clientName, e.getMessage());
+            // Status remains PENDING for retry
+        }
+    }
+    
+    @Transactional
+    public void updateDeliveryStatus(Long id, String client, DataDistribution.DeliveryStatus status) {
+        DataDistribution distribution = repository.findById(id).orElse(null);
+        if (distribution != null) {
+            if ("A".equals(client)) {
+                distribution.setClientAStatus(status);
+            } else if ("B".equals(client)) {
+                distribution.setClientBStatus(status);
+            }
+            repository.save(distribution);
+        }
+    }
+    
+    @Transactional
+    public void retryFailedDeliveries() {
+        List<DataDistribution> pendingDeliveries = 
+            repository.findPendingDeliveries(config.getMaxRetries());
+        
+        log.info("Found {} pending deliveries to retry", pendingDeliveries.size());
+        
+        for (DataDistribution distribution : pendingDeliveries) {
+            distribution.setRetryCount(distribution.getRetryCount() + 1);
+            distribution.setLastRetryAt(LocalDateTime.now());
+            repository.save(distribution);
+            
+            // Retry Client A if pending
+            if (distribution.getClientAStatus() == DataDistribution.DeliveryStatus.PENDING) {
+                sendToClient("A", config.getClientAUrl(), distribution);
+            }
+            
+            // Retry Client B if pending
+            if (distribution.getClientBStatus() == DataDistribution.DeliveryStatus.PENDING) {
+                sendToClient("B", config.getClientBUrl(), distribution);
+            }
+            
+            // Mark as FAILED if max retries reached
+            if (distribution.getRetryCount() >= config.getMaxRetries()) {
+                if (distribution.getClientAStatus() == DataDistribution.DeliveryStatus.PENDING) {
+                    distribution.setClientAStatus(DataDistribution.DeliveryStatus.FAILED);
+                }
+                if (distribution.getClientBStatus() == DataDistribution.DeliveryStatus.PENDING) {
+                    distribution.setClientBStatus(DataDistribution.DeliveryStatus.FAILED);
+                }
+                repository.save(distribution);
+                log.error("Max retries reached for distribution ID: {}", distribution.getId());
+            }
+        }
+    }
+}
+
+// 6. Scheduled Job - RetryScheduler.java
+@Component
+@EnableScheduling
+@Slf4j
+public class RetryScheduler {
+    
+    @Autowired
+    private DataDistributionService distributionService;
+    
+    // Runs every 5 minutes
+    @Scheduled(fixedDelayString = "${client.api.retry-delay-minutes:5}", timeUnit = TimeUnit.MINUTES)
+    public void retryFailedDeliveries() {
+        log.info("Starting retry job for failed deliveries");
+        distributionService.retryFailedDeliveries();
+    }
+}
+
+// 7. Controller - DataDistributionController.java
+@RestController
+@RequestMapping("/api/v1/distribute")
+@Slf4j
+public class DataDistributionController {
+    
+    @Autowired
+    private DataDistributionService distributionService;
+    
+    @PostMapping
+    public ResponseEntity<Map<String, Object>> distributeData(@RequestBody String jsonData) {
+        try {
+            DataDistribution distribution = distributionService.distributeData(jsonData);
+            
+            Map<String, Object> response = new HashMap<>();
+            response.put("id", distribution.getId());
+            response.put("message", "Data distribution initiated");
+            response.put("clientAStatus", distribution.getClientAStatus());
+            response.put("clientBStatus", distribution.getClientBStatus());
+            
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            log.error("Error distributing data", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(Map.of("error", e.getMessage()));
+        }
+    }
+    
+    @GetMapping("/{id}/status")
+    public ResponseEntity<DataDistribution> getStatus(@PathVariable Long id) {
+        return distributionService.repository.findById(id)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
+    }
+}
+
+// 8. Async Configuration - AsyncConfig.java
+@Configuration
+@EnableAsync
+public class AsyncConfig {
+    
+    @Bean(name = "taskExecutor")
+    public Executor taskExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(5);
+        executor.setMaxPoolSize(10);
+        executor.setQueueCapacity(100);
+        executor.setThreadNamePrefix("async-");
+        executor.initialize();
+        return executor;
+    }
+}

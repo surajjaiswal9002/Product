@@ -64,6 +64,7 @@ class Node{
 
 public class CustomLinkedList {
 	private Node head;
+	
 	//add
 	public void add(Player player) {
 		Node newNode = new Node(player);

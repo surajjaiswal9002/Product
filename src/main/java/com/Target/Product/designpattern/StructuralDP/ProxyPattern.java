@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 // Proxy is a structure DP, > Proxy acts as a middle layer between client and actual service.
-//For example, in Walmart’s system, instead of calling the backend every time to get product info, we can use a proxy that checks a cache first.
+//For example, in Walmart’s system, instead of calling the backend every time to get product info, 
+//we can use a proxy that checks a cache first.
 //If data is already there, it returns it instantly — saving time and reducing load on the backend.”
 
 //Step 1: Real subject (the actual service)

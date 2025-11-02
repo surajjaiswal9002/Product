@@ -26,6 +26,7 @@ public class AnagramGroupUsingFreq {
                 keyBuilder.append(f).append('#'); // delimiter to avoid collision
             }
             String key = keyBuilder.toString();
+            System.out.println(" Key :"+key);
 
             map.computeIfAbsent(key, k -> new ArrayList<>()).add(s);
         }

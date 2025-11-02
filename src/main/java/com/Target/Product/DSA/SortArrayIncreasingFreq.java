@@ -1,6 +1,8 @@
-package com.Target.Product.Practice001;
+package com.Target.Product.DSA;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SortArrayIncreasingFreq {
 	public static void main(String[] args) {
@@ -13,6 +15,7 @@ public class SortArrayIncreasingFreq {
         for(int num : nums) {
         	map.put(num, map.getOrDefault(num, 0)+1);
         }
+       
        
         System.out.println( " map : "+map);
         

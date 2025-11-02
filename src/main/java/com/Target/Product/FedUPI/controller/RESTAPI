@@ -1,0 +1,488 @@
+// ============= Entity (Updated with mobileNum field) =============
+@Entity
+@Table(name = "transaction_entity")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class TransactionEntiry {
+    
+    @Id
+    @Column(name = "txn_id")
+    private String txnId;
+    
+    @Column(name = "mobile_num")
+    private String mobileNum;  // Added field for mobile number
+    
+    @Column(name = "account_number")
+    private String accountNumber;
+    
+    @Column(name = "customer_id")
+    private String customerId;
+    
+    @Column(name = "amount")
+    private BigDecimal amount;
+    
+    @Column(name = "status")
+    private String status;
+    
+    @Column(name = "txn_date")
+    private LocalDateTime txnDate;
+    
+    @Column(name = "merchant_id")
+    private String merchantId;
+    
+    @Column(name = "upi_id")
+    private String upiId;
+    
+    @Column(name = "remarks")
+    private String remarks;
+}
+
+// ============= Repository =============
+@Repository
+public interface TransactionRepository extends JpaRepository<TransactionEntiry, String> {
+    
+    // JPA Query Method - finds transaction by txnId AND mobileNum
+    // Both conditions must match (AND operation)
+    Optional<TransactionEntiry> findByTxnIdAndMobileNum(String txnId, String mobileNum);
+    
+    // Additional methods
+    Page<TransactionEntiry> findByAccountNumber(String accountNumber, Pageable pageable);
+    Page<TransactionEntiry> findByMobileNum(String mobileNum, Pageable pageable);
+}
+
+// ============= Request DTOs =============
+
+/**
+ * Request DTO for API 1: Verify Transaction
+ */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class VerifyTransactionRequest {
+    
+    @NotBlank(message = "Transaction ID is required")
+    private String txnId;
+    
+    @NotBlank(message = "Mobile number is required")
+    @Pattern(regexp = "^[6-9]\\d{9}$", message = "Invalid mobile number format")
+    private String mobileNum;
+}
+
+/**
+ * Request DTO for API 2: Get Transaction Details
+ */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class TransactionDetailsRequest {
+    
+    @NotBlank(message = "Transaction ID is required")
+    private String txnId;
+    
+    @NotBlank(message = "Mobile number is required")
+    @Pattern(regexp = "^[6-9]\\d{9}$", message = "Invalid mobile number format")
+    private String mobileNum;
+    
+    // Optional: Additional verification fields
+    private String otp;
+    private String customerName;
+}
+
+// ============= Response DTOs =============
+
+/**
+ * Response DTO for verification
+ */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class VerifyTransactionResponse {
+    private int statusCode;
+    private String message;
+    private boolean isValid;
+    private String txnId;
+    private String status;
+    private LocalDateTime timestamp;
+}
+
+/**
+ * Response DTO for transaction details
+ */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class TransactionDetailsResponse {
+    private int statusCode;
+    private String message;
+    private TransactionDetail transaction;
+    private LocalDateTime timestamp;
+}
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+class TransactionDetail {
+    private String txnId;
+    private String mobileNum;
+    private String accountNumber;
+    private BigDecimal amount;
+    private String status;
+    private String txnDate;
+    private String merchantId;
+    private String upiId;
+    private String remarks;
+}
+
+// ============= Service Layer =============
+@Service
+@Slf4j
+public class TransactionVerificationService {
+    
+    @Autowired
+    private TransactionRepository transactionRepository;
+    
+    /**
+     * API 1: Verify if transaction exists with given txnId and mobileNum
+     */
+    public VerifyTransactionResponse verifyTransaction(VerifyTransactionRequest request) {
+        log.info("Verifying transaction - TxnId: {}, Mobile: {}", 
+                 request.getTxnId(), maskMobile(request.getMobileNum()));
+        
+        VerifyTransactionResponse response = new VerifyTransactionResponse();
+        response.setTimestamp(LocalDateTime.now());
+        response.setTxnId(request.getTxnId());
+        
+        try {
+            // Query database using JPA method
+            Optional<TransactionEntiry> txnOpt = transactionRepository
+                .findByTxnIdAndMobileNum(request.getTxnId(), request.getMobileNum());
+            
+            if (txnOpt.isEmpty()) {
+                log.warn("Transaction not found - TxnId: {}, Mobile: {}", 
+                        request.getTxnId(), maskMobile(request.getMobileNum()));
+                
+                response.setStatusCode(404);
+                response.setMessage("Transaction not found or mobile number mismatch");
+                response.setValid(false);
+                response.setStatus("NOT_FOUND");
+                return response;
+            }
+            
+            TransactionEntiry transaction = txnOpt.get();
+            
+            // Transaction found - verify it
+            response.setStatusCode(200);
+            response.setMessage("Transaction verified successfully");
+            response.setValid(true);
+            response.setStatus(transaction.getStatus());
+            
+            log.info("Transaction verified successfully - TxnId: {}, Status: {}", 
+                    request.getTxnId(), transaction.getStatus());
+            
+            return response;
+            
+        } catch (Exception e) {
+            log.error("Error verifying transaction: {}", e.getMessage(), e);
+            response.setStatusCode(500);
+            response.setMessage("Error processing verification request");
+            response.setValid(false);
+            response.setStatus("ERROR");
+            return response;
+        }
+    }
+    
+    /**
+     * API 2: Get complete transaction details by txnId and mobileNum
+     */
+    public TransactionDetailsResponse getTransactionDetails(TransactionDetailsRequest request) {
+        log.info("Fetching transaction details - TxnId: {}, Mobile: {}", 
+                 request.getTxnId(), maskMobile(request.getMobileNum()));
+        
+        TransactionDetailsResponse response = new TransactionDetailsResponse();
+        response.setTimestamp(LocalDateTime.now());
+        
+        try {
+            // Query using JPA method
+            Optional<TransactionEntiry> txnOpt = transactionRepository
+                .findByTxnIdAndMobileNum(request.getTxnId(), request.getMobileNum());
+            
+            if (txnOpt.isEmpty()) {
+                log.warn("Transaction not found or mobile number mismatch");
+                response.setStatusCode(404);
+                response.setMessage("Transaction not found or unauthorized access");
+                response.setTransaction(null);
+                return response;
+            }
+            
+            TransactionEntiry entity = txnOpt.get();
+            
+            // Map entity to detail DTO
+            TransactionDetail detail = new TransactionDetail();
+            detail.setTxnId(entity.getTxnId());
+            detail.setMobileNum(maskMobile(entity.getMobileNum())); // Masked for security
+            detail.setAccountNumber(maskAccount(entity.getAccountNumber())); // Masked
+            detail.setAmount(entity.getAmount());
+            detail.setStatus(entity.getStatus());
+            detail.setTxnDate(entity.getTxnDate().format(DateTimeFormatter.ISO_DATE_TIME));
+            detail.setMerchantId(entity.getMerchantId());
+            detail.setUpiId(entity.getUpiId());
+            detail.setRemarks(entity.getRemarks());
+            
+            response.setStatusCode(200);
+            response.setMessage("Transaction details fetched successfully");
+            response.setTransaction(detail);
+            
+            log.info("Transaction details fetched successfully for TxnId: {}", request.getTxnId());
+            return response;
+            
+        } catch (Exception e) {
+            log.error("Error fetching transaction details: {}", e.getMessage(), e);
+            response.setStatusCode(500);
+            response.setMessage("Error processing request");
+            response.setTransaction(null);
+            return response;
+        }
+    }
+    
+    // Utility methods
+    private String maskMobile(String mobile) {
+        if (mobile == null || mobile.length() < 4) return "****";
+        return "******" + mobile.substring(mobile.length() - 4);
+    }
+    
+    private String maskAccount(String account) {
+        if (account == null || account.length() < 4) return "****";
+        return "****" + account.substring(account.length() - 4);
+    }
+}
+
+// ============= Controller =============
+@RestController
+@RequestMapping("/api/v1/transactions")
+@RequiredArgsConstructor
+@Slf4j
+public class TransactionController {
+    
+    @Autowired
+    private TransactionService transactionService;
+    
+    @Autowired
+    private TransactionVerificationService verificationService;
+    
+    // Existing create transaction API
+    @PostMapping
+    public ResponseEntity<Map<String, Object>> createTransaction(
+            @Valid @RequestBody TransactionRequest request) {
+        
+        Map<String, Object> response = new HashMap<>();
+        try {
+            log.info("Processing transaction: {}", request.getTxnId());
+            TransactionResponse txnResponse = transactionService.processTransaction(request);
+            
+            response.put("statusCode", txnResponse.getStatCode());
+            response.put("statusDesc", txnResponse.getStatus());
+            
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+            
+        } catch (Exception e) {
+            log.error("Error processing transaction {}: {}", request.getTxnId(), e.getMessage(), e);
+            response.put("statusCode", 500);
+            response.put("statusDesc", "Internal Server Error");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+    
+    /**
+     * API 1: POST - Verify Transaction
+     * Endpoint: POST /api/v1/transactions/verify
+     * 
+     * Purpose: Verify if a transaction exists for given txnId and mobileNum
+     * Use Case: Quick verification before refund, customer support validation
+     */
+    @PostMapping("/verify")
+    public ResponseEntity<VerifyTransactionResponse> verifyTransaction(
+            @Valid @RequestBody VerifyTransactionRequest request) {
+        
+        log.info("API called: /verify - TxnId: {}", request.getTxnId());
+        
+        VerifyTransactionResponse response = verificationService.verifyTransaction(request);
+        
+        HttpStatus status = response.getStatusCode() == 200 ? HttpStatus.OK : 
+                           response.getStatusCode() == 404 ? HttpStatus.NOT_FOUND : 
+                           HttpStatus.INTERNAL_SERVER_ERROR;
+        
+        return ResponseEntity.status(status).body(response);
+    }
+    
+    /**
+     * API 2: POST - Get Transaction Details
+     * Endpoint: POST /api/v1/transactions/details
+     * 
+     * Purpose: Fetch complete transaction details by txnId and mobileNum
+     * Use Case: Customer viewing transaction history, dispute resolution
+     */
+    @PostMapping("/details")
+    public ResponseEntity<TransactionDetailsResponse> getTransactionDetails(
+            @Valid @RequestBody TransactionDetailsRequest request) {
+        
+        log.info("API called: /details - TxnId: {}", request.getTxnId());
+        
+        TransactionDetailsResponse response = verificationService.getTransactionDetails(request);
+        
+        HttpStatus status = response.getStatusCode() == 200 ? HttpStatus.OK : 
+                           response.getStatusCode() == 404 ? HttpStatus.NOT_FOUND : 
+                           HttpStatus.INTERNAL_SERVER_ERROR;
+        
+        return ResponseEntity.status(status).body(response);
+    }
+}
+
+// ============= SQL Generated by JPA =============
+/*
+When you call: findByTxnIdAndMobileNum("TXN123", "9876543210")
+
+Generated SQL:
+SELECT 
+    t.txn_id,
+    t.mobile_num,
+    t.account_number,
+    t.customer_id,
+    t.amount,
+    t.status,
+    t.txn_date,
+    t.merchant_id,
+    t.upi_id,
+    t.remarks
+FROM transaction_entity t
+WHERE t.txn_id = 'TXN123'
+  AND t.mobile_num = '9876543210';
+*/
+
+// ============= Example Request/Response =============
+/*
+
+==================== API 1: VERIFY TRANSACTION ====================
+
+POST http://localhost:8080/api/v1/transactions/verify
+Content-Type: application/json
+
+Request Body:
+{
+    "txnId": "TXN20251031001",
+    "mobileNum": "9876543210"
+}
+
+Success Response (200):
+{
+    "statusCode": 200,
+    "message": "Transaction verified successfully",
+    "isValid": true,
+    "txnId": "TXN20251031001",
+    "status": "SUCCESS",
+    "timestamp": "2025-10-31T15:30:45.123"
+}
+
+Not Found Response (404):
+{
+    "statusCode": 404,
+    "message": "Transaction not found or mobile number mismatch",
+    "isValid": false,
+    "txnId": "TXN20251031001",
+    "status": "NOT_FOUND",
+    "timestamp": "2025-10-31T15:30:45.123"
+}
+
+==================== API 2: GET TRANSACTION DETAILS ====================
+
+POST http://localhost:8080/api/v1/transactions/details
+Content-Type: application/json
+
+Request Body:
+{
+    "txnId": "TXN20251031001",
+    "mobileNum": "9876543210",
+    "otp": "123456"  // Optional
+}
+
+Success Response (200):
+{
+    "statusCode": 200,
+    "message": "Transaction details fetched successfully",
+    "transaction": {
+        "txnId": "TXN20251031001",
+        "mobileNum": "******3210",  // Masked for security
+        "accountNumber": "****5678",  // Masked for security
+        "amount": 5000.00,
+        "status": "SUCCESS",
+        "txnDate": "2025-10-31T14:30:25",
+        "merchantId": "MERCH789",
+        "upiId": "user@upi",
+        "remarks": "Payment for order #12345"
+    },
+    "timestamp": "2025-10-31T15:30:45.123"
+}
+
+Not Found Response (404):
+{
+    "statusCode": 404,
+    "message": "Transaction not found or unauthorized access",
+    "transaction": null,
+    "timestamp": "2025-10-31T15:30:45.123"
+}
+
+==================== POSTMAN COLLECTION ====================
+
+// Test Case 1: Valid Transaction
+POST {{baseUrl}}/api/v1/transactions/verify
+Body: {"txnId": "TXN20251031001", "mobileNum": "9876543210"}
+Expected: 200 OK with isValid: true
+
+// Test Case 2: Invalid Mobile Number
+POST {{baseUrl}}/api/v1/transactions/verify
+Body: {"txnId": "TXN20251031001", "mobileNum": "9999999999"}
+Expected: 404 NOT FOUND with isValid: false
+
+// Test Case 3: Non-existent Transaction
+POST {{baseUrl}}/api/v1/transactions/verify
+Body: {"txnId": "TXN999999999", "mobileNum": "9876543210"}
+Expected: 404 NOT FOUND
+
+// Test Case 4: Get Full Details
+POST {{baseUrl}}/api/v1/transactions/details
+Body: {"txnId": "TXN20251031001", "mobileNum": "9876543210"}
+Expected: 200 OK with complete transaction object
+
+// Test Case 5: Invalid Request (missing fields)
+POST {{baseUrl}}/api/v1/transactions/verify
+Body: {"txnId": ""}
+Expected: 400 BAD REQUEST with validation errors
+
+*/
+
+// ============= Security Considerations =============
+/*
+
+1. Mobile Number Masking:
+   - Original: 9876543210
+   - Masked: ******3210
+   - Only last 4 digits visible in response
+
+2. Account Number Masking:
+   - Original: ACC123456789
+   - Masked: ****6789
+   - Only last 4 digits visible
+
+3. Rate Limiting (Add in production):
+   @RateLimiter(name = "verifyTransaction", fallbackMethod = "rateLimitFallback")
+   
+4. Audit Logging:
+   - Log all verification attempts
+   - Track failed attempts (potential fraud)
+   - Monitor suspicious patterns
+
+5. OTP Verification (Optional):
+   - Add OTP verification for sensitive operations
+   - Implement time-based OTP expiry
+
+*/

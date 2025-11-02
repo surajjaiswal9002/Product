@@ -39,11 +39,11 @@ public class StreamExample {
 		List<Integer> numList = List.of(1, 2, 3, 4, 5, 6);  
 		
 		int sum = numList.stream().reduce(0, (a, b) -> a + b);
-		System.out.println(sum);
+		System.out.println("reduce : "+sum);
 		
 		//Parallel streams can improve performance for large datasets.
 		int sum2 = numList.parallelStream().reduce(0, Integer::sum);
-		System.out.println(sum2);
+		System.out.println("parallelStream : "+sum2);
 		
 		
 		List<Person12> people = Arrays.asList(
