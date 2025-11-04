@@ -45,7 +45,7 @@ class LRUCache{
 		head.next = node;
 	}
 	
-	
+	// Remove 
 	public void remove(Node node) {
 		map.remove(node.key);
 		

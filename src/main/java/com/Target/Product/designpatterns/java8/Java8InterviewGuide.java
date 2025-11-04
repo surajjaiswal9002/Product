@@ -329,6 +329,7 @@ public class Java8InterviewGuide {
             ));
         
         System.out.println("Group by department: " + byDept);
+        System.out.println("Group by salary: " + bySalary);
         System.out.println("Count by department: " + countByDept);
         System.out.println("Avg salary by dept: " + avgSalaryByDept);
         System.out.println();
@@ -1129,11 +1130,12 @@ public class Java8InterviewGuide {
     // ============================================
     public static void main(String[] args) {
     	
-    	findDuplicates();
+    	findDuplicates();  // 1
     	findFirstNonRepeated();
     	findSecondHighest();
+    	groupByField();// 10
     	
-        sortByLength();
+        sortByLength(); // 23
         listToArray();
         findFirstAndLast();
         fibonacciSeries();
