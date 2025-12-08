@@ -21,6 +21,8 @@ public class QuickSortUsingStringArr {
 		int high = end;
 
 		while (mid <= high) {
+			/// current logic is ascending order, 
+			//if I want to change in descending order then if(nums[mid] > pivot)
 			int cmp = arr[mid].compareTo(pivot);
 			if (cmp < 0) {
 				swap(arr, low, mid);

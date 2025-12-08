@@ -20,13 +20,13 @@ public class VolatileFlagDemo {
 	}
 	
 	public static void main(String[] args) throws InterruptedException {
-		VolatileFlagDemo v = new VolatileFlagDemo();
+		VolatileFlagDemo vilatile = new VolatileFlagDemo();
 		
-		Thread t = new Thread(v::start);
-		t.start();
+		Thread thread = new Thread(vilatile :: start);
+		thread.start();
 		
 		Thread.sleep(1000);
 		
-		v.stop();
+		vilatile.stop();
 	}
 }

@@ -1,7 +1,8 @@
 package com.Target.Product.SOLID;
 
 
-/// objects of a superclass should be replaceable with objects of a subclass without affecting the correctness of the program.
+/// objects of a superclass should be replaceable with objects of a subclass 
+///without brekling the behaviour of program.
 
 //Base class with only shared behavior
 abstract class Bird {

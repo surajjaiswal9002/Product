@@ -1,5 +1,6 @@
 package com.Target.Product.designpattern.creational;
 
+// Builder Design Pattern, is a creational design pattern to create the complex object step by step
 
 
 public class BulderDesignPatter {

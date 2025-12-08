@@ -1,4 +1,4 @@
-package com.Target.Product.designpatterns.java8;
+package com.Target.Product.Java.java8;
 
 import java.util.*;
 import java.util.stream.Collector;
@@ -54,7 +54,7 @@ public class StreamExample {
 
 			Map<Integer, List<Person12>> groupedByAge = people.stream().collect(Collectors.groupingBy(p -> p.age));
 
-			System.out.println(groupedByAge);
+			System.out.println("groupedByAge"+groupedByAge);
 			
 			
 			int max = numList.stream().max(Integer::compareTo).orElseThrow();

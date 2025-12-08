@@ -18,7 +18,6 @@ public class SortArrayDutchNationalFlag {
 		int mid = 0;
 		int high = nums.length - 1;
 		
-		
 		while(mid <= high) {
 			if(nums[mid] == 0) {
 					swap(nums, low, mid);
@@ -28,15 +27,12 @@ public class SortArrayDutchNationalFlag {
 					mid++;
 			}else {
 				swap(nums, mid, high);
-				high--;
-					
-			
-					
+				high--;	
 			}
 		}
-	
 	}
 	
+	// swap logic
 	public static void swap(int[] nums, int s, int e) {
 		int temp = nums[s];
 		nums[s] = nums[e];

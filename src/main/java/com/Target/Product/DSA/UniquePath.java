@@ -27,7 +27,7 @@ public class UniquePath {
 	    return dp[n - 1];
 	}
 
-	
+	/// mostly used
 	// Tc - O(n * m) and sc - O(n * m)
 	public static int findUniquePath(int m, int n) {
 		int[][] dp = new int[m][n];

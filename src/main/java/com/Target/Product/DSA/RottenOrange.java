@@ -18,7 +18,9 @@ class cell{
 // TC - O(n * m) and sc - O(n * m)
 public class RottenOrange {
 	public static void main(String[] args) {
-		int[][] grid = {{2,1,1},{1,1,0},{0,1,1}};
+		int[][] grid = {{2,1,1},
+						{1,1,0},
+						{0,1,1}};
 		
 		int ans = orangeRotten(grid);
 		System.out.println("Minimum time to rot the orange : "+ans);
@@ -27,24 +29,23 @@ public class RottenOrange {
 	public static int orangeRotten(int[][] grid) {
 		int n = grid.length;
 		int m = grid[0].length;
-		
 		Queue<cell> q = new LinkedList<>();
 		int rottingCount = 0;
 		
 		for(int i = 0 ; i < n; i++) {
 			for(int j = 0; j < m; j++) {
-				if(grid[i][j] == 2) {
+				if(grid[i][j] == 2) {   // 2
 					q.add(new cell(i, j, 0));
 				}
 				
-				if(grid[i][j] == 1) {
+				if(grid[i][j] == 1) {  // 1
 					rottingCount++;
 				}
 			}
 		}
 		
 		
-		if(rottingCount == 0) return 0;
+		if(rottingCount == 0) return 0;  // base case
 		
 		int time = 0;
 		int[] dirRow = {1, -1, 0, 0};

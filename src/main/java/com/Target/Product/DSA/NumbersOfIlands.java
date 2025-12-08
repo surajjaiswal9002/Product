@@ -28,7 +28,6 @@ public class NumbersOfIlands {
 		 
 		 int n = gridLands.length;
 		 int m = gridLands[0].length;
-		 
 		 int[][] visited = new int[n][m];
 		 int count = 0;
 		 

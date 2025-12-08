@@ -1,4 +1,4 @@
-package com.Target.Product.LinkedList;
+t6package com.Target.Product.LinkedList;
 
 import java.util.*;
 

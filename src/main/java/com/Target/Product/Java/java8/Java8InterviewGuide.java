@@ -1,4 +1,4 @@
-package com.Target.Product.designpatterns.java8;
+package com.Target.Product.Java.java8;
 
 import java.util.*;
 import java.util.stream.*;
@@ -31,6 +31,7 @@ public class Java8InterviewGuide {
     public static void findDuplicates() {
         System.out.println("=== 1. FIND DUPLICATES ===");
         List<Integer> nums = Arrays.asList(1, 2, 3, 2, 4, 5, 3, 6, 1);
+        List<String> fruits = Arrays.asList("apple", "mango", "apple","banana");
         
         // Solution 1: Using Set
         Set<Integer> seen = new HashSet<>();
@@ -42,6 +43,9 @@ public class Java8InterviewGuide {
         Map<Integer, Long> frequency = nums.stream()
             .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
         
+        Map<Character, Long> fruitFrequency = fruits.stream().collect(Collectors.groupingBy(e -> e.charAt(0), Collectors.counting()));
+        
+        System.out.println(" fruitFrequency : "+fruitFrequency);
         List<Integer> dups = frequency.entrySet().stream()
             .filter(e -> e.getValue() > 1)
             .map(Map.Entry::getKey)

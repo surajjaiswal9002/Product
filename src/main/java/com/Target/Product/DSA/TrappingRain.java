@@ -21,7 +21,7 @@ public class TrappingRain {
 			left[i] = Math.max(left[i-1], nums[i]);
 		}
 		
-		right[n - 1] = nums[n- 1];
+		right[n - 1] = nums[n - 1];
 		for(int i = n - 2; i >= 0; i--) {
 			right[i] = Math.max(right[i +1], nums[i]);
 		}
@@ -31,7 +31,7 @@ public class TrappingRain {
 		int minWater = 0;
 		
 		for(int i = 0; i < n; i++) {
-			minWater += Math.min(left[i], right[i]) - nums[i];
+			minWater = minWater + Math.min(left[i], right[i]) - nums[i];
 		}
 		
 		System.out.println(" Trapping water : "+minWater);

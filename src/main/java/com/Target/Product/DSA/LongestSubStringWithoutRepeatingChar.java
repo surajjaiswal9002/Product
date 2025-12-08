@@ -19,6 +19,7 @@ public class LongestSubStringWithoutRepeatingChar {
 		for (int right = 0; right < s.length(); right++) {
 			char currChar = s.charAt(right);
 
+			
 			while (uniqueSet.contains(currChar)) {
 				uniqueSet.remove(s.charAt(left));
 				left++;

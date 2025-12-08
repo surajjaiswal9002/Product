@@ -1,4 +1,4 @@
-package com.Target.Product.designpatterns.java8;
+package com.Target.Product.Java.java8;
 
 public class Examples {
     int maxNum = 0;  // Instance Variable

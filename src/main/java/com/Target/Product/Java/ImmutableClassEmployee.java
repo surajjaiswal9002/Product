@@ -39,8 +39,10 @@ public final class ImmutableClassEmployee {
     public static void main(String[] args) {
 		
     	Details d = new Details(1001, "sjwater");
+    	Details d1 = new Details(1002, "sjwater");
     	List<Details> list = new ArrayList<Details>();
     	list.add(d);
+    	list.add(d1);
     	
     	
     	ImmutableClassEmployee ice = new ImmutableClassEmployee("Suraj", 101, list);

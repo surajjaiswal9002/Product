@@ -4,23 +4,26 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+
+// tc - O(n log n) and sc - O(n)
 public class SortArrayIncreasingFreq {
 	public static void main(String[] args) {
 		
 		 //int[] nums = {1, 1, 2, 2, 2, 3};  // Output: [3,1,1,2,2,2]
         int[] nums = {2, 3, 1, 3, 2};       // Output: [1,3,3,2,2]
-        
         int n = nums.length;
+        
+        // accurance
         Map<Integer, Integer> map = new HashMap<>();
         for(int num : nums) {
         	map.put(num, map.getOrDefault(num, 0)+1);
         }
-       
-       
-        System.out.println( " map : "+map);
+        System.out.println( "accurance  map : "+map);
         
         Integer arr[] = Arrays.stream(nums).boxed().toArray(Integer[]::new);
+        System.out.println(" arr : "+Arrays.toString(arr));
         
+        // Sort array increasing freq
         Arrays.sort(arr, (a, b) -> {
         	int a1 = map.get(a);
         	int b1 = map.get(b);

@@ -21,6 +21,7 @@ public class CoinChange {
 			for(int coin : coins) {
 				if(i >= coin) {
 					dp[i] = Math.min(dp[i], dp[i - coin] + 1);
+					System.out.println(dp[i]);
 				}
 			}
 		}

@@ -16,9 +16,7 @@ public class Factorial {
 			return n;
 		}
 		
-		
-		return n * recrsionFactorial(n - 1);
-		
+		return n * recrsionFactorial(n - 1);	
 	}
 	
 	// tc O (n) and sc - O(1)

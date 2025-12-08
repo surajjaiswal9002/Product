@@ -10,6 +10,8 @@ public class SpiralMatrix {
 		System.out.println(" Spiral Matrix : "+res);
 	}
 	
+	
+	// tc - O(n*m) and sc - O(n*m)
 	public static List<Integer> spiralMatrix(int[][] matrix){
 		List<Integer> res = new ArrayList<>();
 		
@@ -21,18 +23,22 @@ public class SpiralMatrix {
 		int left = 0, right = matrix[0].length - 1;
 		
 		while(top <= bottom && left <= right) {
+			
 			// left - right
 			for(int i=left; i<=right;i++) {
 				res.add(matrix[top][i]);
 			}
 			top++;
+			
 			// top - bottom
 			for(int j = top; j <= bottom; j++) {
 				res.add(matrix[j][right]);
 			}
 			right--;
-			// right left
+			
+			// top bottom
 			if(top <= bottom) {
+				// right left
 				for(int i = right; i>=left; i--) {
 					res.add(matrix[bottom][i]);
 				}

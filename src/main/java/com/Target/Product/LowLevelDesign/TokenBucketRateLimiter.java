@@ -2,20 +2,20 @@ package com.Target.Product.LowLevelDesign;
 
 public class TokenBucketRateLimiter {
 	
-		private final long capacity;   //
-		private final long refilRate;
-		private long availableTokens;
+		private final long capacity;   // Bucket size
+		private final long refilRate;  // refil Rate
+		private long availableTokens;  // each token use - each request. if 2 req all per sec and user requested 4. it allowed first 2 request  rest 2 req will be dropped.
 		private long lastRefillTimeNs;
 		
-		
+		// constructor
 		TokenBucketRateLimiter(long capacity, long refilRate){
 			if(capacity <= 0 || refilRate <= 0) {
 				 throw new IllegalArgumentException("capacity and refil rate must be positive.");
 			}
-			this.capacity = capacity;
-			this.refilRate = refilRate;
-			this.availableTokens = capacity;
-			this.lastRefillTimeNs = System.nanoTime();
+			this.capacity = capacity;   // c
+			this.refilRate = refilRate; // r
+			this.availableTokens = capacity; // c
+			this.lastRefillTimeNs = System.nanoTime();  // 
 		}
 		
 	
@@ -68,9 +68,10 @@ public class TokenBucketRateLimiter {
 			
 			for(int i = 1; i <= 10; i++) {
 				boolean allowed = bucket.allowRequest();
-				 System.out.printf("Request %d: %s (Available: %d)%n", 
+				 System.out.printf("Request %d: %s (Available:x %d)%n", 
 			                i, allowed ? "ALLOWED" : "DENIED", bucket.getAvailableTokens());
-				   	//Thread.sleep(300); // wait 0.3s between requests
+				   	
+				 Thread.sleep(300); // wait 0.3s between requests
 			}
 			
 			

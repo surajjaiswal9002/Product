@@ -1,5 +1,10 @@
 package com.Target.Product.designpattern.creational;
 
+
+// SingleTon Design Pattern can use enum to create Single DP?
+// yes, using enum it is possible and best and safest way.
+// Enum provide Thread Safety, Serialization Safety and reflection Safety
+
 public class SingleTonDP {
     // step1 - private static variable to hold the single instance
     private static SingleTonDP instance;

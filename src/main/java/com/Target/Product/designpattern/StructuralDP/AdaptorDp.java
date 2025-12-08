@@ -1,6 +1,7 @@
 package com.Target.Product.designpattern.StructuralDP;
 
 
+
 // Adaptor Design pattern is a structural design pattern, where creating bridge between 2 incompatable interface 
 //without modifying their existing code.
 

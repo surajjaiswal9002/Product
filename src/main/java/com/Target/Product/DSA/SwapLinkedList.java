@@ -13,7 +13,7 @@ public class SwapLinkedList {
 		printLinkedList(res);
 	}
 	
-	
+	// Tc = O(n) and sc - O(n)
 	public static ListNode swapLinkedList(ListNode head) {
 		if(head == null || head.next == null) {
 			return head;

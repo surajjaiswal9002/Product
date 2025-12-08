@@ -24,7 +24,6 @@ public class Minesweeper {
 		
 		int n = grid.length;
 		int m = grid[0].length;
-		
 		int[][] result = new int[n][m];
 		
 		for(int i = 0; i < n; i++) {
@@ -53,12 +52,11 @@ public class Minesweeper {
 	
 	public static int bfsMinesweeper(char[][] grid, int row, int col, int m, int n) {
 		int count = 0;
-		
 		Queue<Pair> q = new LinkedList<Pair>();
 		q.add(new Pair(row, col));
 		
 		int[] dirRow = {-1, -1, -1, 0, 0, 1, 1, 1};
-		int[] dirCol = {-1, 0, 1, -1, 1, -1, 0, 1};
+		int[] dirCol = {-1,  0,  1,-1, 1,-1, 0, 1};
 		
 		while(!q.isEmpty()) {
 			

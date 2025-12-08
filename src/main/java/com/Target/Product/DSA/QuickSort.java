@@ -22,7 +22,8 @@ public class QuickSort {
 		
 		
 		while(mid <= high) {
-			if(nums[mid] < pivot) {
+			if(nums[mid] < pivot) {   /// current logic is ascending order, 
+									//if I want to change in descending order then if(nums[mid] > pivot)
 				swap(nums, low, mid);
 				low++;
 				mid++;
