@@ -58,9 +58,6 @@ class Employee001{
 	public String toString() {
 		return "Employee001 [id=" + id + ", name=" + name + ", deptId=" + deptId + ", commitCount=" + commitCount + "] \n ";
 	}
-	
-	
-	
 }
 
 

@@ -1,5 +1,6 @@
 package com.Target.Product.DSA;
 
+// TC - O(n) and SC -  O(1)
 public class MaxWaterContainer {
     public static int maxArea(int[] height) {
         int left = 0, right = height.length - 1;

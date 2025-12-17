@@ -49,8 +49,8 @@ public class EmployeeStreamExample {
         	    .filter(e -> e.salary > 50000)
         	    .filter(e -> e.city.equals("Bangalore"))
         	    .sorted(
-        	        Comparator.comparing((Employee e) -> e.city)
-        	                  .thenComparing(e -> e.salary)
+        	        Comparator.comparing(Employee::getCity)
+        	                  .thenComparing(Employee::getSalary)
         	                  .reversed() // reverse overall order
         	    )
         	    .map(e -> e.name + " - " + e.salary)

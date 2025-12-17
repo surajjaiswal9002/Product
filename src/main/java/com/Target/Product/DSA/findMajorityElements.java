@@ -8,6 +8,8 @@ public class findMajorityElements {
 		 System.out.println(" Majaroties : "+majorities);
 	}
 	
+	
+	// O(n) and O(1)
 	private static int findMajoritiesEle(int[] nums) {
 		int count = 0;
 		int candidate = 0;
@@ -17,7 +19,7 @@ public class findMajorityElements {
 				candidate = num;
 			}
 			
-			count += (num == candidate) ? 1 : -1;
+			count += (candidate == num) ? 1 : -1;
 		}
 		
 		

@@ -13,6 +13,7 @@ public class MinimumPathSum {
 		System.out.println(" ans : "+ans);
 	}
 	
+	// tc - O(n * m) and sc - O(1)
 	public static int findMinPathSum(int[][] grid) {
 		
 		int n = grid.length;
@@ -33,7 +34,7 @@ public class MinimumPathSum {
 		Arrays.stream(grid).map(Arrays::toString).forEach(System.out::println);
 		for(int i = 1; i < n; i++) {
 			for(int j = 1; j < m; j++) {
-				grid[i][j] += Math.min(grid[i - 1][j], grid[i][j - 1]);
+				grid[i][j] = grid[i][j] + Math.min(grid[i - 1][j], grid[i][j - 1]);
 			}
 		}
 		

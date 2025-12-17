@@ -1,4 +1,4 @@
-package com.Target.Product.Java.java8;
+   package com.Target.Product.Java.java8;
 
 import java.util.function.Supplier;
 

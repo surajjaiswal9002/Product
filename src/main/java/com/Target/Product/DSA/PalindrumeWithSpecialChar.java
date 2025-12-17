@@ -8,11 +8,11 @@ public class PalindrumeWithSpecialChar {
 		String input1 = "RaceCar";
 		// tc - O(n) and sc - (n)
 		boolean isTrue = checkPalindrume(input);
-		System.out.println(isTrue);
+		System.out.println("Using for loop :"+isTrue);
 		
 		boolean isItPall =  isPalindrume(input1);
 		
-		System.out.println(isItPall);
+		System.out.println("using two pointer : "+isItPall);
 		
 		
 	}
@@ -45,6 +45,7 @@ public class PalindrumeWithSpecialChar {
 		return true;
 	}
 	
+	// // O(n2) and O(n)
 	public static boolean checkPalindrume(String s) {
 		
 		String newString = "";

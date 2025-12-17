@@ -14,6 +14,7 @@ public class FirstNonRepeatedChar3Way {
         System.out.println("Using Java 8 Streams: " + findUsingStreams(input));
     }
 
+    // tc - O(n) and O(1)
     // ✅ Method 1: Using Array (for lowercase letters only)
     public static Character findUsingArray(String input) {
         int[] freq = new int[26];

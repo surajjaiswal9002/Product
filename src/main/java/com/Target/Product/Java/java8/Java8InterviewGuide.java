@@ -23,6 +23,40 @@ public class Java8InterviewGuide {
         public String toString() {
             return name + " (₹" + salary + ", " + age + "y, " + department + ")";
         }
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public double getSalary() {
+			return salary;
+		}
+
+		public void setSalary(double salary) {
+			this.salary = salary;
+		}
+
+		public int getAge() {
+			return age;
+		}
+
+		public void setAge(int age) {
+			this.age = age;
+		}
+
+		public String getDepartment() {
+			return department;
+		}
+
+		public void setDepartment(String department) {
+			this.department = department;
+		}
+        
+        
     }
     
     // ============================================
@@ -122,14 +156,14 @@ public class Java8InterviewGuide {
         
         // Sort by salary (asc), then by name (asc)
         List<Employee> sorted = emps.stream()
-            .sorted(Comparator.comparing((Employee e) -> e.salary)
-                    .thenComparing(e -> e.name))
+            .sorted(Comparator.comparing(Employee::getSalary)
+                    .thenComparing(Employee::getName))
             .collect(Collectors.toList());
         
         // Sort by salary (desc), then by age (asc)
         List<Employee> sorted2 = emps.stream()
-            .sorted(Comparator.comparing((Employee e) -> e.salary).reversed()
-                    .thenComparing(e -> e.age))
+            .sorted(Comparator.comparing(Employee::getSalary).reversed()
+                    .thenComparing(Employee::getAge))
             .collect(Collectors.toList());
         
         System.out.println("Original: " + emps);

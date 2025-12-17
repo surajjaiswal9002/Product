@@ -43,7 +43,7 @@ public class FlatMapExample {
 		
 		
 	Map<Object, Long> accurance = listOfDetails.stream()
-			.flatMap(list -> list.stream())
+			.flatMap(List::stream)
 			.collect(Collectors.groupingBy(fruits -> fruits
 					, Collectors.counting()));
 		System.out.println(accurance);
